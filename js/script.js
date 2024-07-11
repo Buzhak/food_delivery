@@ -1,7 +1,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // tabs
+    // Tabs
     const tabs = document.querySelectorAll('.tabheader__item'),
           tabsContent = document.querySelectorAll('.tabcontent'),
           tabsParent = document.querySelector('.tabheader__items');
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // timer
+    // Timer
 
     const deadline = '2024-10-21';
 
@@ -94,4 +94,63 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     setClock('.timer', deadline);
+
+    // Modal
+
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
+          modal = document.querySelector('.modal'),
+          modalCloseBtn = modal.querySelector('div[data-close]');
+
+          
+    const openModal = (modal) => {
+        modal.classList.toggle('show');
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
+    };
+
+    modalTrigger.forEach(btn =>{
+            btn.addEventListener('click', (e) => {
+                // modal.style.display = 'block';
+                // modal.classList.add('show');
+                // modal.classList.remove('hide');
+            openModal(modal);
+        });
+    }); 
+
+    const closeModal = (modal) => {
+        modal.classList.toggle('show');
+        document.body.style.overflow = '';
+    };
+ 
+    modalCloseBtn.addEventListener('click', e => {
+        closeModal(modal);
+    });
+
+    modal.addEventListener('click', (e) =>{
+        if (e.target === modal) {
+            closeModal(modal);
+        }
+    });
+
+    document.addEventListener('keydown', (e) =>{
+        if(e.code === 'Escape' && modal.classList('show')) {
+            closeModal(modal)
+        }
+    })
+    
+    const modalTimerId = setTimeout(function () {
+        openModal(modal)
+    }, 30000);
+
+    const showModelByScrol = () => {
+        if(
+            window.scrollY + document.documentElement.clientHeight + 2 >=
+            document.documentElement.scrollHeight
+        ) {
+            openModal(modal);
+            window.removeEventListener('scroll', showModelByScrol);
+        }
+    };
+
+    window.addEventListener('scroll', showModelByScrol);
 });
