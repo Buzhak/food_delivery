@@ -47,27 +47,12 @@ function cards() {
     const menuItems = document.querySelectorAll('.menu .container .menu__item');
     menuItems.forEach(i => {i.remove()});
 
-    getResource('http://127.0.0.1:5000')
+    getResource('http://localhost:3000/menu/')
         .then(data => {
             data.forEach(({img, altimg, title, descr, price}) => {
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
         })
-    
-    // axios.get('http://127.0.0.1:5000')
-    //     .then(function (response) {
-    //         response.data.forEach(({img, altimg, title, descr, price}) => {
-    //             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
-    //         });
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     })
-
-
-    // for (let key in data) {
-    //     new MenuCard(...Object.values(data[key])).render();
-    // }
 }
 
 export default cards;
